@@ -1,2 +1,2 @@
 # hangman
-# insert documentation here
+# insert documentation here!

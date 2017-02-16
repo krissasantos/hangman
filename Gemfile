@@ -1,1 +1,4 @@
-require 'httparty'
+source 'http://rubygems.org'
+
+gem 'httparty'
+gem 'byebug'
