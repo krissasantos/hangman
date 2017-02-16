@@ -57,25 +57,37 @@ def game_time(chosen_word)
   until guesses == 0 || !blanks.include?("_")
     p blanks
     p "Give me a letter:"
-    letter = gets.chomp()
 
-    if chosen_word.include?(letter)
-      chosen_word.each_char.with_index do |char, idx|
-        if char == letter
-            blanks[idx] = letter
-       
+    letter = gets.chomp().downcase #to consider both possible cases of the letter given by the user
+
+      if chosen_word.include?(letter)
+        chosen_word.each_char.with_index do |char, idx|
+          if char == letter
+              blanks[idx] = letter
+         
+          end
         end
+
+        # Do not deduct number of guesses if the following things happen: 
+          # if guess isnt  a letter
+          # if guess is repeating
+
+        #let the user try again and give a valid input. 
+
+      # elsif !letter.is_a?(String)
+      #   p "Only letters form a-z is allowed. Try again."
+
+      # elsif !incorrect_guesses.include?(letter)
+      #   p "You already tried this letter! Pick another one."
+      elsif ("a".."z").include?(letter) && !incorrect_guesses.include?(letter)
+
+        incorrect_guesses << letter
+        guesses -=1
+        p "You have #{guesses} guesses left. Try again!  |   Incorrect guesses: #{incorrect_guesses.join(",")}" unless guesses == 0    
+
+      else
+        p "Invalid input. Make sure you do not repeat your guesses. Only use letters from a-z."
       end
-
-    else
-      incorrect_guesses << letter
-      guesses -=1
-      p "You have #{guesses} guesses left. Try again!  |   Incorrect guesses: #{incorrect_guesses.join(",")}" unless guesses == 0
-
-    
-    
-
-    end
   end
 
   if guesses == 0 #or guesses variable 
