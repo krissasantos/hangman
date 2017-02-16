@@ -3,14 +3,13 @@
 require 'httparty'
 require 'byebug'
 
-byebug
 
 
 def get_words
  
   response = HTTParty.get('http://linkedin-reach.hagbpyjegb.us-west-2.elasticbeanstalk.com/words')
   # converted_response = response
-
+  converted_response = response.parsed_response
 end
 
-get_words.split('\\')
+words = get_words.split(" ")
