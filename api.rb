@@ -3,34 +3,34 @@
 require 'httparty'
 require 'byebug'
 
-
+#method for computer to collect words
 def get_words
   response = HTTParty.get('http://linkedin-reach.hagbpyjegb.us-west-2.elasticbeanstalk.com/words')
-  # converted_response = response
   converted_response = response.parsed_response
 end
 
-#Ideally: 
-#Create hash with words as keys and values including the optional parameters: difficulty, minilength, maxlenght,start, count (review structure later)
 
-#For now, get basics working by:
-#Step 1: computer collecting words
+#Later: Create hash with words as keys and values including the optional parameters: difficulty, minilength, maxlenght,start, count (review structure later)
+
+
+
+
+
+#Step 1: computer randomly choosing a word
 words = get_words.split(" ")
 
-# def start_game
 p "Hello! How long should the word you're guessing be?"
 length = gets.chomp().to_i
 "Pick your game level from 1-10:"
 
 difficulty = gets.chomp().to_i
-# end
 
 def pick_a_word(length)
   #remove sandwich code and change into map after it gets working
   words = get_words.split(" ")
   filtered_wrds_by_length = []
   
-  words.each do |wrd|
+  words.each do |wrd| #or select method
     if wrd.size == length.to_i
       filtered_wrds_by_length << wrd
     end
@@ -45,17 +45,17 @@ chosen_word = pick_a_word(length)
 
 
 #Rules
-# User can keep guessing until they reach the number of strikes
-# strikes may be provided at the start of the game. in that case, 
-# change 5 into the strikes variable based on difficulty chosen by user 
-# in the beginning
+# User can keep guessing until they run out of guesses / (game_time loop will keep running until user reaches 6 guesses
+byebug
 
 
 def game_time(chosen_word)
-  strikes = 0
-  blanks = "X" * chosen_word.length 
+  guesses = 6
+  incorrect_guesses = []
+  blanks = "_" * chosen_word.length 
 
-  until strikes == 5 #|| !blanks.include?("X")
+  until guesses == 0 || !blanks.include?("_")
+    p blanks
     p "Give me a letter:"
     letter = gets.chomp()
 
@@ -63,30 +63,29 @@ def game_time(chosen_word)
       chosen_word.each_char.with_index do |char, idx|
         if char == letter
             blanks[idx] = letter
-            p blanks
+       
         end
       end
 
     else
-      # byebug
-      strikes +=1
-      p "Strike #{strikes}. Try again!"
-     
+      incorrect_guesses << letter
+      guesses -=1
+      p "You have #{guesses} guesses left. Try again!  |   Incorrect guesses: #{incorrect_guesses.join(",")}" unless guesses == 0
+
+    
+    
+
     end
   end
 
-  if strikes == 5 #or strikes variable 
-   p "You lost. The word is #{chosen_word}"#.Want to play again? y/n"#insert "Want to play again?"
-    # play_again = gets.chomp()
-    # if play_again == "y" ||play_again == "Y" 
+  if guesses == 0 #or guesses variable 
+   p "You lost. The word is '#{chosen_word}'"#.Want to play again? y/n"#insert "Want to play again?"
+  
       
-    # end
-  elsif  !blanks.include?("X")
+  elsif  !blanks.include?("_")
    p "Good job!" #insert "Want to play again?"
   end
 end
-
-
 p "hola!"
 
 
