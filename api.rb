@@ -68,9 +68,9 @@ def game_time(chosen_word)
       end
 
     else
-      byebug
+      # byebug
       strikes +=1
-      p "Nope, try again."
+      p "Strike #{strikes}. Try again!"
      
     end
   end
