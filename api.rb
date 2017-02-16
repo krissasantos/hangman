@@ -16,15 +16,13 @@ end
 
 
 
-#Step 1: computer randomly choosing a word
 words = get_words.split(" ")
 
 p "Hello! How long should the word you're guessing be?"
 length = gets.chomp().to_i
-"Pick your game level from 1-10:"
 
-difficulty = gets.chomp().to_i
 
+#Step 1: computer randomly choosing a word
 def pick_a_word(length)
   #remove sandwich code and change into map after it gets working
   words = get_words.split(" ")
@@ -46,7 +44,7 @@ chosen_word = pick_a_word(length)
 
 #Rules
 # User can keep guessing until they run out of guesses / (game_time loop will keep running until user reaches 6 guesses
-byebug
+# byebug
 
 
 def game_time(chosen_word)
@@ -98,6 +96,8 @@ def game_time(chosen_word)
    p "Good job!" #insert "Want to play again?"
   end
 end
+
+game_time(chosen_word)
 p "hola!"
 
 
