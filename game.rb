@@ -42,63 +42,53 @@ chosen_word = pick_a_word(length)
 
 
 
-#Rules
-# User can keep guessing until they run out of guesses / (game_time loop will keep running until user reaches 6 guesses
-# byebug
-
-
 def game_time(chosen_word)
   guesses = 6
   incorrect_guesses = []
   blanks = "_" * chosen_word.length 
 
   until guesses == 0 || !blanks.include?("_")
+
     p blanks
     p "Give me a letter:"
 
     letter = gets.chomp().downcase #to consider both possible cases of the letter given by the user
 
       if chosen_word.include?(letter)
+
         chosen_word.each_char.with_index do |char, idx|
           if char == letter
               blanks[idx] = letter
-         
           end
         end
 
-        # Do not deduct number of guesses if the following things happen: 
-          # if guess isnt  a letter
-          # if guess is repeating
-
-        #let the user try again and give a valid input. 
-
-      # elsif !letter.is_a?(String)
-      #   p "Only letters form a-z is allowed. Try again."
-
-      # elsif !incorrect_guesses.include?(letter)
-      #   p "You already tried this letter! Pick another one."
       elsif ("a".."z").include?(letter) && !incorrect_guesses.include?(letter)
 
         incorrect_guesses << letter
         guesses -=1
         p "You have #{guesses} guesses left. Try again!  |   Incorrect guesses: #{incorrect_guesses.join(",")}" unless guesses == 0    
 
-      else
-        p "Invalid input. Make sure you do not repeat your guesses. Only use letters from a-z."
+      elsif !("a".."z").include?(letter)
+
+        p "Only letters from a-z are allowed. Try again."
+
+      elsif  incorrect_guesses.include?(letter) 
+
+        p "You've already guessed with that letter!"
+
       end
   end
 
   if guesses == 0 #or guesses variable 
-   p "You lost. The word is '#{chosen_word}'"#.Want to play again? y/n"#insert "Want to play again?"
-  
+   p "You lost. The word is '#{chosen_word}'."#.Want to play again? y/n"#insert "Want to play again?"
       
   elsif  !blanks.include?("_")
-   p "Good job!" #insert "Want to play again?"
+   p "Good job, you." #insert "Want to play again?"
   end
 end
 
 game_time(chosen_word)
-p "hola!"
+p "Thanks for playing!"
 
 
 
